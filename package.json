@@ -1,5 +1,5 @@
 {
-  "private": true,
+  "private": false,
   "name": "@devjskit/github-workflows",
   "version": "0.1.0-alpha.1",
   "author": "Billgo <hi@billgo.me>",
