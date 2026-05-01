@@ -14,7 +14,7 @@ on:
       packages:
         required: false
         type: string
-        default: ''
+        default: ""
       comment-with-dev:
         required: false
         type: boolean
@@ -40,4 +40,6 @@ jobs:
         if: ${{ inputs.build != '' }}
 
       - name: Publish
-        run: bunx pkg-pr-new@0.0 publish --bun --packageManager=bun ${{ inputs.compact && '--compact' || '' }} ${{ inputs.packages }} ${{ inputs['comment-with-dev'] && '--commentWithDev' || '' }}
+        run: bunx --bun pkg-pr-new@0.0 publish --bun --packageManager=bun ${{
+          inputs.compact && '--compact' || '' }} ${{ inputs.packages }} ${{
+          inputs['comment-with-dev'] && '--commentWithDev' || '' }}

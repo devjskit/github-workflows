@@ -26,7 +26,7 @@ on:
       changelog:
         required: false
         type: string
-        default: bunx changelogithub
+        default: bunx --bun changelogithub
       publish-command:
         required: false
         type: string

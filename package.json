@@ -20,6 +20,7 @@
   ],
   "scripts": {
     "build": "bunx --bun tsdown --config tsdown.config.mts",
+    "check": "bun run typecheck && bun run lint && bun run test && bun run build",
     "dev": "bunx --bun tsdown --config-loader unrun --watch",
     "format": "bunx --bun biome check --write .",
     "lint": "bunx --bun biome check .",

@@ -6,7 +6,7 @@ Reusable GitHub Actions for TypeScript projects, optimized for Bun.
 
 - Bun-only setup action for checkout, Bun install, and dependency install
 - Reusable workflows for unit tests, release, auto-fix, and publish-any-commit previews
-- Defaults aligned with Bun commands such as `bun run build`, `bun run test`, `bunx`, and `bun publish`
+- Defaults aligned with Bun commands such as `bun run build`, `bun run test`, `bunx --bun`, and `bun publish`
 
 ## Included Workflows
 
