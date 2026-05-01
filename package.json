@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "name": "@devjskit/github-workflows",
+  "version": "0.1.0-alpha.1",
+  "author": "Billgo <hi@billgo.me>",
+  "description": "@devjskit/github-workflows is a rspack plugin for creating langs and i18n index file.",
+  "license": "MIT",
+  "repository": "git+ssh://git@github.com:devjskit/github-workflows.git",
+  "bugs": "https://github.com/devjskit/github-workflows/issues",
+  "sideEffects": false,
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bunx rimraf dist && bunx tsdown --config tsdown.config.mts",
+    "test": "bun test",
+    "dev": "tsdown --config-loader unrun --watch"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.13",
+    "@devjskit/biome-config": "^0.2.2",
+    "tsdown": "^0.21.10",
+    "typescript": "^6.0.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
+}
