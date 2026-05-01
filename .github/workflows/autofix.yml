@@ -11,11 +11,15 @@ on:
       command:
         required: false
         type: string
-        default: pnpm run lint --fix
+        default: bun run lint --fix
       os:
         required: false
         type: string
         default: ubuntu-slim
+      bun-version:
+        required: false
+        type: string
+        default: latest
 
 jobs:
   autofix:
@@ -24,9 +28,10 @@ jobs:
       contents: read
 
     steps:
-      - name: Setup JS
-        uses: devjskit/github-workflows/setups@v1
+      - name: Setup Bun
+        uses: devjskit/github-workflows/setup-bun@v1
         with:
+          bun-version: ${{ inputs.bun-version }}
           no-frozen-lockfile: true
 
       - name: Fix

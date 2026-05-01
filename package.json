@@ -6,6 +6,7 @@
   "description": "Reusable GitHub Actions for TypeScript projects.",
   "license": "MIT",
   "repository": "git+ssh://git@github.com:devjskit/github-workflows.git",
+  "packageManager": "bun@1.3.13",
   "sideEffects": false,
   "type": "module",
   "types": "./dist/index.d.ts",
@@ -18,9 +19,12 @@
     "README.md"
   ],
   "scripts": {
-    "build": "bunx rimraf dist && bunx tsdown --config tsdown.config.mts",
-    "test": "bun test",
-    "dev": "tsdown --config-loader unrun --watch"
+    "build": "bunx --bun tsdown --config tsdown.config.mts",
+    "dev": "bunx --bun tsdown --config-loader unrun --watch",
+    "format": "bunx --bun biome check --write .",
+    "lint": "bunx --bun biome check .",
+    "test": "bun test --pass-with-no-tests",
+    "typecheck": "bunx --bun tsc --noEmit"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.13",

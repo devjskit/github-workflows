@@ -13,30 +13,30 @@ on:
         type: string
         default: "\"ubuntu-latest\", \"windows-latest\""
 
-      node-versions:
+      bun-version:
         required: false
         type: string
-        default: "22,24,25"
+        default: latest
 
       typecheck:
         required: false
         type: string
-        default: pnpm run typecheck
+        default: bun run typecheck
 
       lint:
         required: false
         type: string
-        default: pnpm run lint
+        default: bun run lint
 
       build:
         required: false
         type: string
-        default: pnpm run build
+        default: bun run build
 
       test:
         required: false
         type: string
-        default: pnpm run test
+        default: bun run test
 
       skip-lint:
         required: false
@@ -58,12 +58,14 @@ jobs:
     runs-on: ${{ inputs.primary-os }}
     if: ${{ !inputs.skip-lint }}
     steps:
-      - name: Setup JS
-        uses: sxzz/workflows/setup-js@v2
+      - name: Setup Bun
+        uses: devjskit/github-workflows/setup-bun@v1
+        with:
+          bun-version: ${{ inputs.bun-version }}
 
       - name: Build
         run: ${{ inputs.build }}
-        if: ${{ inputs.build-for-lint }}
+        if: ${{ inputs.build-for-lint && inputs.build != '' }}
 
       - name: Type Check
         run: ${{ inputs.typecheck }}
@@ -77,19 +79,20 @@ jobs:
     strategy:
       matrix:
         os: ${{ fromJson(format('[{0}]', inputs.os-matrix)) }}
-        node-version: ${{ fromJson(format('[{0}]', inputs.node-versions)) }}
       fail-fast: false
 
     if: ${{ !inputs.skip-test }}
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Setup JS
-        uses: sxzz/workflows/setup-js@v2
+      - name: Setup Bun
+        uses: devjskit/github-workflows/setup-bun@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          bun-version: ${{ inputs.bun-version }}
 
       - name: Build
         run: ${{ inputs.build }}
+        if: ${{ inputs.build != '' }}
 
       - name: Unit Test
         run: ${{ inputs.test }}
+        if: ${{ inputs.test != '' }}

@@ -19,6 +19,18 @@ on:
         required: false
         type: string
         default: ""
+      bun-version:
+        required: false
+        type: string
+        default: latest
+      changelog:
+        required: false
+        type: string
+        default: bunx changelogithub
+      publish-command:
+        required: false
+        type: string
+        default: bun publish --access public
 
 jobs:
   release:
@@ -30,23 +42,23 @@ jobs:
       id-token: write
 
     steps:
-      - name: Setup JS
-        uses: sxzz/workflows/setup-js@v2
+      - name: Setup Bun
+        uses: devjskit/github-workflows/setup-bun@v1
         with:
+          bun-version: ${{ inputs.bun-version }}
           fetch-all: true
 
       - name: Generate GitHub Changelog
-        run: pnpx changelogithub
+        run: ${{ inputs.changelog }}
         continue-on-error: true
-        if: ${{ inputs.github-release }}
+        if: ${{ inputs.github-release && inputs.changelog != '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build
         run: ${{ inputs.build }}
-        if: ${{ inputs.build && inputs.publish }}
+        if: ${{ inputs.build != '' && inputs.publish }}
 
       - name: Publish to NPM
-        run: pnpm -r publish --access public --no-git-checks ${{ inputs['tag'] &&
-          format('--tag {0}', inputs['tag']) || '' }}
+        run: ${{ inputs['publish-command'] }} ${{ inputs['tag'] && format('--tag {0}', inputs['tag']) || '' }}
         if: ${{ inputs.publish }}

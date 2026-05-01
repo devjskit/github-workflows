@@ -1,0 +1,43 @@
+name: Release Commit
+
+on:
+  workflow_call:
+    inputs:
+      build:
+        required: false
+        type: string
+        default: bun run build
+      compact:
+        required: false
+        type: boolean
+        default: false
+      packages:
+        required: false
+        type: string
+        default: ''
+      comment-with-dev:
+        required: false
+        type: boolean
+        default: false
+      bun-version:
+        required: false
+        type: string
+        default: latest
+
+jobs:
+  release:
+    name: Release Commit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Bun
+        uses: devjskit/github-workflows/setup-bun@v1
+        with:
+          bun-version: ${{ inputs.bun-version }}
+
+      - name: Build
+        run: ${{ inputs.build }}
+        if: ${{ inputs.build != '' }}
+
+      - name: Publish
+        run: bunx pkg-pr-new@0.0 publish --bun --packageManager=bun ${{ inputs.compact && '--compact' || '' }} ${{ inputs.packages }} ${{ inputs['comment-with-dev'] && '--commentWithDev' || '' }}
