@@ -1,5 +1,7 @@
 # @devjskit/github-workflows
 
+Reusable GitHub Actions for TypeScript projects.
+
 ---
 
 ## 🤝 Contributing
